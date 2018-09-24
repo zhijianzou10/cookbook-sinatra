@@ -1,38 +1,6 @@
-require 'sinatra'
-require 'sinatra/reloader' if development?
-require 'pry-byebug'
-require 'better_errors'
-require 'nokogiri'
 require 'csv'
+require 'nokogiri'
 
-set :bind, '0.0.0.0'
-configure :development do
-  use BetterErrors::Middleware
-  BetterErrors.application_root = File.expand_path(__dir__)
-end
-
-# Class recipe
-class Recipe
-  attr_reader :name, :description, :preptime, :difficulty, :done
-
-  def initialize(name, description, preptime = nil, difficulty = nil, done = false)
-    @name = name
-    @description = description
-    @preptime = preptime
-    @difficulty = difficulty
-    @done = done
-  end
-
-  def done?
-    @done
-  end
-
-  def mark_as_done!
-    @done = true
-  end
-end
-
-# Class cookbook
 class Cookbook
   attr_reader :name_array, :desc_array, :prep_array
 
@@ -75,9 +43,4 @@ class Cookbook
       end
     end
   end
-end
-
-get '/' do
-  erb :layout
-
 end
